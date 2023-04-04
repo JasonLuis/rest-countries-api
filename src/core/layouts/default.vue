@@ -1,6 +1,11 @@
 <template>
   <q-layout view="hHh lpR fFf" class="no-shadow" :class="color">
-    <UiBaseHeader @click-action="changeBackgroundColor" />
+    <UiBaseHeader :dark-mode="darkMode" @click-action="changeBackgroundColor" />
+    <q-page-container class="row justify-center">
+      <div>
+        <router-view :dark-mode="darkMode" />
+      </div>
+    </q-page-container>
   </q-layout>
 </template>
 
@@ -9,9 +14,10 @@ import { ref } from 'vue';
 import UiBaseHeader from '../components/BaseHeader/BaseHeader.vue';
 
 const color = ref<string>('bg-info');
-
+const darkMode = ref<boolean>(false);
 function changeBackgroundColor() {
   color.value = color.value === 'bg-info' ? 'bg-dark-page' : 'bg-info';
+  darkMode.value = !darkMode.value;
 }
 </script>
 

@@ -2,7 +2,7 @@
   <q-header
     elevated
     class="text-black row items-center q-pl-xl q-pr-xl"
-    :class="select ? 'invert' : 'bg-white'"
+    :class="props.darkMode ? 'invert' : 'bg-white'"
   >
     <q-toolbar>
       <q-toolbar-title> Where in the world? </q-toolbar-title>
@@ -18,18 +18,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const emit = defineEmits(['clickAction']);
-const select = ref<boolean>(false);
+const props = withDefaults(
+  defineProps<{
+    darkMode: boolean;
+  }>(),
+  {
+    darkMode: false
+  }
+);
 
 function clickAction() {
-  select.value = !select.value;
   emit('clickAction');
 }
 
 const moonIcon = computed(() => {
-  return !select.value
+  return !props.darkMode
     ? new URL(`../../assets/images/moon-icon.svg`, import.meta.url).href
     : new URL(`../../assets/images/moon-dark.svg`, import.meta.url).href;
 });
