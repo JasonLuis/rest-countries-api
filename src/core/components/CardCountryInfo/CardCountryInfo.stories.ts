@@ -28,6 +28,11 @@ export default {
       control: {
         type: 'text'
       }
+    },
+    darkMode: {
+      control: {
+        type: 'boolean'
+      }
     }
   }
 };

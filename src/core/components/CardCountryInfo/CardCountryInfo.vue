@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-none">
+  <q-card class="q-pa-none" :class="props.darkMode ? 'dark-mode' : ''">
     <!-- https://flagcdn.com/br.svg" class="card-image -->
     <q-img :src="props.img" />
 
@@ -23,13 +23,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-const props = defineProps<{
-  country: string;
-  population: number;
-  region: string;
-  capital: string;
-  img: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    country: string;
+    population: number;
+    region: string;
+    capital: string;
+    img: string;
+    darkMode: boolean;
+  }>(),
+  {
+    darkMode: false
+  }
+);
 
 const formatNumberPopulation = computed(() => {
   const format = props.population.toLocaleString('en-us');
@@ -38,31 +44,35 @@ const formatNumberPopulation = computed(() => {
 </script>
 
 <style scoped lang="scss">
+%text {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  color: #111517;
+}
+
 .q-card {
   width: 264px;
   height: 336px;
-
+  background: #ffffff;
+  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.0294384);
+  border-radius: 5px;
   &:deep(.q-img) {
     width: 264px;
     height: 160px;
   }
 
   &:deep(.text-title) {
-    font-family: 'Nunito Sans';
-    font-style: normal;
+    @extend %text;
     font-weight: 800;
     font-size: 18px;
     line-height: 26px;
-    color: #111517;
   }
 
   &:deep(.q-card__section) {
-    font-family: 'Nunito Sans';
-    font-style: normal;
+    @extend %text;
     font-weight: 600;
     font-size: 14px;
-    // line-height: 16px;
-    color: #111517;
+    line-height: 16px;
   }
 }
 
@@ -75,6 +85,16 @@ const formatNumberPopulation = computed(() => {
   color: #111517;
   &:deep(span) {
     font-weight: 300;
+  }
+}
+
+.dark-mode {
+  background-color: #2b3844;
+  &:deep(.text-title) {
+    color: $white;
+  }
+  &:deep(.card-text-info) {
+    color: $white;
   }
 }
 </style>
