@@ -28,7 +28,7 @@ const Template = (args, { argTypes }) => ({
       model: ''
     };
   },
-  template: '<ui-input-search v-bind="args" :model-value="model"/>'
+  template: '<ui-input-search v-bind="args" v-model="model"/>'
 });
 
 export const Default = Template.bind({});

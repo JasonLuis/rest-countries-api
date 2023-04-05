@@ -5,6 +5,7 @@
     class="no-border no-radius"
     outlined
     :class="props.darkMode ? 'dark-mode' : 'light-mode'"
+    @update:modelValue="$emit('update:model-value', $event)"
   >
     <template #prepend>
       <q-icon name="search" @click="$emit('clickAction')" />
@@ -14,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const input = ref<string>('');
+const input = ref<string | undefined>();
 defineEmits(['clickAction', 'update']);
 
 const props = withDefaults(

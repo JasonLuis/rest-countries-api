@@ -14,7 +14,7 @@
     :options-selected-class="select"
     borderless
     options-dense
-    @update:modelValue="$emit('update:cupom', $event)"
+    @update:modelValue="$emit('update:model-value', $event)"
   >
     <template #option="{ itemProps, opt }">
       <q-item v-bind="itemProps" :class="menuDark">
@@ -61,7 +61,7 @@ const select = computed(() => {
 %text {
   font-family: 'Nunito Sans';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
 }
