@@ -130,4 +130,39 @@ const select = computed(() => {
     color: $white;
   }
 }
+
+@media (max-width: $breakpoint-sm) {
+  %text {
+    font-size: 12px;
+  }
+  .q-field {
+    width: 200px;
+    max-height: 48px;
+    &:deep(.q-field__control) {
+      height: 48px;
+    }
+    &:deep(.q-field__control-container) {
+      padding-top: 0px;
+    }
+    &:deep(.q-field__native) {
+      max-height: 48px;
+      padding: 0px 0px 6px 0px;
+    }
+    &:deep(.q-field__append) {
+      padding: 0px 0px 6px 0px;
+    }
+    /* &:deep(.q-field__inner) {
+      height: 48px;
+      &:deep(.q-field__control) {
+        height: 48px !important;
+        &::before {
+          height: 48px !important;
+        }
+        &:deep(.q-field__control-container) {
+          height: 48px !important;
+        }
+      }
+    } */
+  }
+}
 </style>

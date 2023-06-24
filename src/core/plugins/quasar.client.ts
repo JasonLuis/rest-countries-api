@@ -20,7 +20,9 @@ import {
   QItem,
   QSeparator,
   QSpace,
-  QAvatar
+  QAvatar,
+  QInput,
+  QSelect
 } from 'quasar';
 
 export default defineNuxtPlugin(nuxtApp => {
@@ -45,7 +47,9 @@ export default defineNuxtPlugin(nuxtApp => {
       QItem,
       QSeparator,
       QSpace,
-      QAvatar
+      QAvatar,
+      QInput,
+      QSelect
     },
     plugins: {}
   };

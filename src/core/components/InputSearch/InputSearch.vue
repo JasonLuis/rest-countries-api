@@ -87,4 +87,28 @@ const props = withDefaults(
     color: $white;
   }
 }
+
+@media (max-width: $breakpoint-sm) {
+  .q-field {
+    width: 100%;
+    height: 48px;
+    &:deep(.q-icon) {
+      width: 16px;
+      height: 16px;
+    }
+    &:deep(.q-field__control) {
+      height: 48px;
+      &::after {
+        color: $white;
+      }
+    }
+    &:deep(.q-field__prepend) {
+      height: 48px;
+    }
+  }
+  %text-style {
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
 </style>

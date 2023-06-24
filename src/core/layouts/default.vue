@@ -1,10 +1,8 @@
 <template>
   <q-layout view="hHh lpR fFf" class="no-shadow" :class="color">
     <UiBaseHeader :dark-mode="darkMode" @click-action="changeBackgroundColor" />
-    <q-page-container class="row justify-center">
-      <div>
-        <router-view :dark-mode="darkMode" />
-      </div>
+    <q-page-container class="row justify-center full-width full-height">
+      <router-view :dark-mode="darkMode" />
     </q-page-container>
   </q-layout>
 </template>
