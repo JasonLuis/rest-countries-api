@@ -1,11 +1,11 @@
 <template>
   <q-input
-    v-model="input"
+    v-model="model"
     placeholder="Search for a country..."
     class="no-border no-radius"
     outlined
     :class="props.darkMode ? 'dark-mode' : 'light-mode'"
-    @update:modelValue="$emit('update:model-value', $event)"
+    @update:model-value="$emit('update:model-value', $event)"
   >
     <template #prepend>
       <q-icon name="search" @click="$emit('clickAction')" />
@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const input = ref<string | undefined>();
-defineEmits(['clickAction', 'update']);
+defineEmits(['clickAction', 'update', 'update:model-value']);
 
+const model = ref<string | undefined>();
 const props = withDefaults(
   defineProps<{
     darkMode: boolean;

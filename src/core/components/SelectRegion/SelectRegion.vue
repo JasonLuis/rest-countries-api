@@ -31,7 +31,7 @@ import { ref, computed } from 'vue';
 
 const model = ref<string | undefined>(undefined);
 
-const options = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+const options = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 
 const label = computed(() => {
   return model.value ? undefined : 'Filter by Region';

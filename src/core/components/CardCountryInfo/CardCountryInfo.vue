@@ -28,7 +28,7 @@ const props = withDefaults(
     country: string;
     population: number;
     region: string;
-    capital: string;
+    capital?: string;
     img: string;
     darkMode: boolean;
   }>(),
