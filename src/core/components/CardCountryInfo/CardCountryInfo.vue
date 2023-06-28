@@ -56,6 +56,7 @@ const formatNumberPopulation = computed(() => {
   background: #ffffff;
   box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.0294384);
   border-radius: 5px;
+  cursor: pointer;
   &:deep(.q-img) {
     width: 264px;
     height: 160px;

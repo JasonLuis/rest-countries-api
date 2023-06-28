@@ -7,6 +7,7 @@ export class ServerAPI {
     if (!Array.isArray(res)) {
       throw new TypeError('O arquivo JSON não existe');
     }
+    console.log('country', res);
     return res;
   }
 
@@ -25,7 +26,6 @@ export class ServerAPI {
   }
 
   async filterCountriesByName(country?: string): Promise<Array<any>> {
-    console.log('country', country);
     const path = new URL(`./data.json`, import.meta.url).href;
     const data = await fetch(path);
     const res = await data.json();

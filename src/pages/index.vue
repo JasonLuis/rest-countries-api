@@ -22,7 +22,8 @@
         :dark-mode="darkMode"
         :capital="country.capital"
         :img="country.flag"
-        class="q-mt-lg"
+        class="q-mb-xl"
+        @click="navigate"
       />
     </div>
   </div>
@@ -39,6 +40,7 @@ const sendCountry = ref<string | undefined>();
 const selectRegion = ref<string | undefined>();
 const countries = ref<Array<any> | undefined>();
 const server = new ServerAPI();
+const router = useRouter();
 const props = defineProps<{
   darkMode: boolean;
 }>();
@@ -57,6 +59,16 @@ async function sendCountryByName(country?: string) {
   const res = await server.filterCountriesByName(country);
   return res;
 }
+
+const navigate = () => {
+  router.push({
+    path: './detail',
+    query: {
+      darkMode: `${props.darkMode}`
+    }
+  });
+};
+
 countries.value = await getCountrys();
 watch(selectRegion, async newValue => {
   if (newValue) {
