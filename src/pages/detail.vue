@@ -11,16 +11,22 @@
 
     <div class="row q-mt-xl">
       <div class="col-12 col-md-5 card-img">
-        <q-img :src="`https://flagcdn.com/be.svg`" />
+        <div v-if="country" class="q-mb-md">
+          <q-img :src="country.flag" />
+        </div>
       </div>
-      <div class="col-12 col-md-4">.col-12 .col-md-4</div>
+      <div class="col-12 col-md-4">{{ country }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { ServerAPI } from '@/app/server/server';
+
+const server = new ServerAPI();
 const router = useRouter();
+const route = useRoute();
 const navigate = () => {
   router.push({
     path: './'
@@ -30,9 +36,28 @@ const props = defineProps<{
   darkMode: boolean;
 }>();
 
+const country = await getCountry();
+
+async function getCountry() {
+  const countryName = route.query.country as string; 
+
+  return await server.getCountryByName(countryName)
+    .then(res => {
+      console.log('Country fetched:', res);
+      return res;
+    })
+    .catch(err => {
+      console.error('Error fetching country:', err);
+      return null;
+    });
+}
+
+
+
 const buttonDark = computed(() => {
   return props.darkMode ? 'menu-dark' : '';
 });
+
 </script>
 
 <style scoped lang="scss">

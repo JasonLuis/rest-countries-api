@@ -23,7 +23,7 @@
         :capital="country.capital"
         :img="country.flag"
         class="q-mb-xl"
-        @click="navigate"
+        @click="navigate(country.name)"
       />
     </div>
   </div>
@@ -60,11 +60,12 @@ async function sendCountryByName(country?: string) {
   return res;
 }
 
-const navigate = () => {
+const navigate = (countryName: string) => {
   router.push({
     path: './detail',
     query: {
-      darkMode: `${props.darkMode}`
+      darkMode: `${props.darkMode}`,
+      country: `${countryName}`
     }
   });
 };
@@ -96,7 +97,7 @@ watch(sendCountry, async newValue => {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 45px;
 }
 @media (max-width: $breakpoint-sm) {
   .input-mt-select {
