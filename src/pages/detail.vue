@@ -1,7 +1,10 @@
 <template>
-  <div class="container full-width full-height">
+  <div
+    class="container full-width full-height"
+    :class="darkMode ? 'text-white' : ''"
+  >
     <div class="row justify-between">
-      <q-btn flat :class="buttonDark" @click="navigate">
+      <q-btn flat :class="buttonDark" @click="returnHome">
         <div class="row items-center no-wrap">
           <q-icon left name="keyboard_backspace" />
           <div class="text-center">Back</div>
@@ -9,25 +12,21 @@
       </q-btn>
     </div>
 
-    <div class="row q-mt-xl">
-      <div class="col-12 col-md-5 card-img">
-        <div v-if="country" class="q-mb-md">
-          <q-img :src="country.flag" />
-        </div>
-      </div>
-      <div class="col-12 col-md-4">{{ country }}</div>
-    </div>
+    <UiInfoCountry :country="country" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { CountryDto } from '../app/model/ICountry';
 import { ServerAPI } from '@/app/server/server';
+import UiInfoCountry from '@/core/components/InfoCountry/InfoCountry.vue';
 
 const server = new ServerAPI();
 const router = useRouter();
 const route = useRoute();
-const navigate = () => {
+const returnHome = () => {
   router.push({
     path: './'
   });
@@ -36,34 +35,35 @@ const props = defineProps<{
   darkMode: boolean;
 }>();
 
-const country = await getCountry();
-
-async function getCountry() {
-  const countryName = route.query.country as string; 
-
-  return await server.getCountryByName(countryName)
-    .then(res => {
-      console.log('Country fetched:', res);
-      return res;
-    })
-    .catch(err => {
-      console.error('Error fetching country:', err);
-      return null;
-    });
-}
-
-
+const country = ref<CountryDto.ICountry>();
+const countryName = ref<string | undefined>();
 
 const buttonDark = computed(() => {
   return props.darkMode ? 'menu-dark' : '';
 });
 
+onMounted(async () => {
+  countryName.value = route.query.country as string;
+
+  if (countryName) {
+    try {
+      const result = await server.getCountryByName(countryName.value);
+      country.value = result;
+      console.log('Country fetched:', result);
+    } catch (err) {
+      console.error('Error fetching country:', err);
+    }
+  } else {
+    console.warn('countryName query param is empty');
+  }
+});
 </script>
 
 <style scoped lang="scss">
 .container {
   padding-left: 80px;
   padding-right: 80px;
+  font-family: 'Nunito Sans';
 }
 
 .q-btn {
@@ -77,31 +77,15 @@ const buttonDark = computed(() => {
   box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.0532439);
 }
 
-.q-img {
-  width: 560px;
-  height: 401px;
-}
-
 .menu-dark {
   background: #2b3844;
   color: $white;
 }
 
 @media (max-width: $breakpoint-sm) {
-  .q-img {
-    width: 320px;
-    height: 229px;
-    margin: auto;
-  }
-
   .container {
     padding-left: 16px;
     padding-right: 16px;
-  }
-
-  .card-img {
-    display: flex;
-    justify-content: center;
   }
 }
 </style>
