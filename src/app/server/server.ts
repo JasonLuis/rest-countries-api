@@ -1,4 +1,5 @@
-import { CountryDto } from "../model/ICountry";
+import { numberFormatterDecimal } from '../helper';
+import { CountryDto } from '../model/ICountry';
 
 export class ServerAPI {
   async getAllCountrys(): Promise<Array<any>> {
@@ -9,7 +10,7 @@ export class ServerAPI {
     if (!Array.isArray(res)) {
       throw new TypeError('O arquivo JSON não existe');
     }
-    console.log('country', res);
+
     return res;
   }
 
@@ -40,7 +41,9 @@ export class ServerAPI {
       return res;
     }
 
-    const filter = res.filter(item => item.name.toLowerCase().includes(country.toLowerCase()));
+    const filter = res.filter(item =>
+      item.name.toLowerCase().includes(country.toLowerCase())
+    );
 
     return filter;
   }
@@ -58,7 +61,7 @@ export class ServerAPI {
       return {
         name: item.name as string,
         nativeName: item.nativeName as string,
-        population: item.population as number,
+        population: numberFormatterDecimal(item.population as number),
         region: item.region as string,
         subregion: item.subregion as string,
         capital: item.capital as string,
@@ -66,11 +69,13 @@ export class ServerAPI {
         currencies: item.currencies as CountryDto.Currency[],
         languages: item.languages as CountryDto.Language[],
         borders: item.borders as string[],
-        flag: item.flag as string,
+        flag: item.flag as string
       };
     });
 
-    const filter = countries.find(item => item.name.toLowerCase() === country.toLowerCase());
+    const filter = countries.find(
+      item => item.name.toLowerCase() === country.toLowerCase()
+    );
 
     if (!filter) {
       throw new Error('País não encontrado');
