@@ -2,7 +2,7 @@
   <div class="row q-mt-xl">
     <div class="col-12 col-md-5 card-img">
       <div v-if="props.country" class="q-mb-md">
-        <q-img :src="props.country.flag" />
+        <q-img :src="props.country.flag" role="country flag" />
       </div>
     </div>
     <div class="col-12 col-md-6 row items-center">

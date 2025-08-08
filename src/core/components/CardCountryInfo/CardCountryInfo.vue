@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-none" :class="props.darkMode ? 'dark-mode' : ''">
     <!-- https://flagcdn.com/br.svg" class="card-image -->
-    <q-img :src="props.img" />
+    <q-img :src="props.img" role="country flag" />
 
     <q-card-section class="q-pt-lg q-pb-none">
       <div class="text-title">{{ props.country }}</div>
