@@ -9,7 +9,7 @@
 
     <q-card-section class="q-pt-none q-mt-md">
       <div class="card-text-info q-pb-sm">
-        Population: <span>{{ formatNumberPopulation }}</span>
+        Population: <span>{{ props.population }}</span>
       </div>
       <div class="card-text-info q-pb-sm">
         Region: <span>{{ props.region }}</span>
@@ -22,11 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 const props = withDefaults(
   defineProps<{
     country: string;
-    population: number;
+    population: string;
     region: string;
     capital?: string;
     img: string;
@@ -36,11 +35,6 @@ const props = withDefaults(
     darkMode: false
   }
 );
-
-const formatNumberPopulation = computed(() => {
-  const format = props.population.toLocaleString('en-us');
-  return format;
-});
 </script>
 
 <style scoped lang="scss">

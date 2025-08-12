@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/v-on-event-hyphenation -->
 <!-- eslint-disable vue/no-v-text-v-html-on-component -->
 <!-- eslint-disable vue/no-v-html -->
 <template>

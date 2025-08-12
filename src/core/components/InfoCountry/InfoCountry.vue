@@ -70,10 +70,10 @@
 
 <script setup lang="ts">
 import UiListWithSeparator from '@/core/components/ListWithSeparator/ListWithSeparator.vue';
-import { CountryDto } from '~~/src/app/model/ICountry';
+import { Country } from '~~/src/app/core/model/Country';
 
 const props = defineProps<{
-  country?: CountryDto.ICountry;
+  country?: Country;
 }>();
 </script>
 

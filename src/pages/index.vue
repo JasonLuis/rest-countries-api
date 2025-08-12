@@ -34,31 +34,31 @@ import { ref, watch } from 'vue';
 import UiInputSearch from '../core/components/InputSearch/InputSearch.vue';
 import UiSelectRegion from '../core/components/SelectRegion/SelectRegion.vue';
 import UiCardCountryInfo from '../core/components/CardCountryInfo/CardCountryInfo.vue';
-import { ServerAPI } from '@/app/server/server';
+import { useCountries } from '../core/composables/useContries';
+import { Country } from '../app/core/model/Country';
 
 const sendCountry = ref<string | undefined>();
 const selectRegion = ref<string | undefined>();
-const countries = ref<Array<any> | undefined>();
-const server = new ServerAPI();
+const countries = ref<Array<Country> | undefined>();
+
+const { getAll, filterByRegion, filterByName } = useCountries();
+
 const router = useRouter();
 const props = defineProps<{
   darkMode: boolean;
 }>();
 
-async function getCountrys() {
-  const res = await server.getAllCountrys();
-  return res;
-}
+countries.value = await getAll();
 
-async function getCountrysByRegion(filter: string) {
-  const res = await server.filterCountryByRegion(filter);
-  return res;
-}
+watch(selectRegion, async newValue => {
+  if (newValue) {
+    countries.value = await filterByRegion(newValue);
+  }
+});
 
-async function sendCountryByName(country?: string) {
-  const res = await server.filterCountriesByName(country);
-  return res;
-}
+watch(sendCountry, async newValue => {
+  if (newValue) countries.value = await filterByName(newValue);
+});
 
 const navigate = (countryName: string) => {
   router.push({
@@ -69,17 +69,6 @@ const navigate = (countryName: string) => {
     }
   });
 };
-
-countries.value = await getCountrys();
-watch(selectRegion, async newValue => {
-  if (newValue) {
-    countries.value = await getCountrysByRegion(newValue);
-  }
-});
-
-watch(sendCountry, async newValue => {
-  countries.value = await sendCountryByName(newValue);
-});
 </script>
 
 <style scoped lang="scss">

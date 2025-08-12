@@ -19,11 +19,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { CountryDto } from '../app/model/ICountry';
-import { ServerAPI } from '@/app/server/server';
+import { useCountries } from '../core/composables/useContries';
+import { Country } from '../app/core/model/Country';
 import UiInfoCountry from '@/core/components/InfoCountry/InfoCountry.vue';
 
-const server = new ServerAPI();
+const { getByName } = useCountries();
+
 const router = useRouter();
 const route = useRoute();
 const returnHome = () => {
@@ -35,7 +36,7 @@ const props = defineProps<{
   darkMode: boolean;
 }>();
 
-const country = ref<CountryDto.ICountry>();
+const country = ref<Country>();
 const countryName = ref<string | undefined>();
 
 const buttonDark = computed(() => {
@@ -47,9 +48,7 @@ onMounted(async () => {
 
   if (countryName) {
     try {
-      const result = await server.getCountryByName(countryName.value);
-      country.value = result;
-      console.log('Country fetched:', result);
+      country.value = await getByName(countryName.value);
     } catch (err) {
       console.error('Error fetching country:', err);
     }
