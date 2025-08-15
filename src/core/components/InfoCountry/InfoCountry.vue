@@ -2,11 +2,15 @@
   <div class="row q-mt-xl">
     <div class="col-12 col-md-5 card-img">
       <div v-if="props.country" class="q-mb-md">
-        <q-img :src="props.country.flag" role="country flag" />
+        <q-img
+          :src="props.country.flag"
+          role="country flag"
+          style="object-fit: contain !important"
+        />
       </div>
     </div>
     <div class="col-12 col-md-6 row items-center">
-      <div class="section-info row q-pl-sm">
+      <div class="section-info row q-pl-xl">
         <div class="col-12 name-country q-mb-lg">{{ country?.name }}</div>
         <div class="col-12 col-sm-5 col-md-5 q-mb-md">
           <p>
@@ -79,8 +83,13 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .q-img {
-  max-width: 560px;
+  width: 100%;
+  min-width: 350px;
   height: 401px;
+  :deep(.q-img__image) {
+    object-fit: contain !important;
+    object-position: center !important;
+  }
 }
 
 .name-country {
@@ -123,9 +132,16 @@ p {
 
 @media (max-width: $breakpoint-sm) {
   .q-img {
-    width: 320px;
-    height: 229px;
+    width: 100%;
+    min-width: 320px;
+    height: 100%;
+    min-height: 229px;
     margin: auto;
+    :deep(.q-img__image) {
+      object-fit: contain !important;
+      object-position: center !important;
+      min-height: 229px;
+    }
   }
 
   .card-img {
@@ -134,7 +150,7 @@ p {
   }
 
   .name-country {
-    text-align: center;
+    text-align: left;
   }
 
   .section-info {
